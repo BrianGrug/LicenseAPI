@@ -28,24 +28,37 @@ public class Actions {
         String result = jsonObject.get("result").getAsString();
         String discord = jsonObject.get("discord").getAsString();
 
+
         if(!result.equals("Valid")){
-            if(logType.equals(LogType.ENABLED)){
-                logger.log(2, "Your license is invalid! Please contact me on Discord @ DaddyImPregnant#5192");
-            }
-
-            Plugin main = Bukkit.getPluginManager().getPlugin(type);
-
             if(plugin){
-                Bukkit.getScheduler().runTaskLater(main, () -> Bukkit.getPluginManager().disablePlugin(main),25L);
+                Plugin main = Bukkit.getPluginManager().getPlugin(type);
+                Bukkit.getScheduler().runTaskLater(main, () -> {
+                    if (logType.equals(LogType.ENABLED)) {
+                        logger.log(2, "[-----------------------------------------]");
+                        logger.log(2, "         Your license is invalid!");
+                        logger.log(2, "         Please create a ticket @");
+                        logger.log(2, "" + "https://discord.mizuledevelopment.com");
+                        logger.log(2, "[-----------------------------------------]");
+                        logger.log(2, "Your license is invalid! Please create a ticket @ https://discord.mizuledevelopment.com");
+                        Bukkit.getPluginManager().disablePlugin(main);
+                    }
+                },5L);
             }
+
+
             return LicenseResults.DENY;
         }
         if(logType.equals(LogType.ENABLED)){
-            logger.log(3, "[-----------------------------------------]");
-            logger.log(3, "      Your license has been verified!");
-            logger.log(3, "         Your key is registered to:");
-            logger.log(3, "             " + discord);
-            logger.log(3, "[-----------------------------------------]");
+            if(plugin){
+                Plugin main = Bukkit.getPluginManager().getPlugin(type);
+                Bukkit.getScheduler().runTaskLater(main, () -> {
+                    logger.log(3, "[-----------------------------------------]");
+                    logger.log(3, "      Your license has been verified!");
+                    logger.log(3, "         Your key is registered to:");
+                    logger.log(3, "             " + discord);
+                    logger.log(3, "[-----------------------------------------]");
+                },5L);
+            }
         }
         return LicenseResults.ALLOW;
     }
