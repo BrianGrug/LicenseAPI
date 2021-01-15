@@ -26,6 +26,7 @@ public class Actions {
         String ip = jsonObject.get("ip").getAsString();
         String date = jsonObject.get("date").getAsString();
         String result = jsonObject.get("result").getAsString();
+        String discord = jsonObject.get("discord").getAsString();
 
         if(!result.equals("Valid")){
             if(logType.equals(LogType.ENABLED)){
@@ -39,7 +40,6 @@ public class Actions {
             }
             return LicenseResults.DENY;
         }
-        String discord = jsonObject.get("discord").getAsString();
         if(logType.equals(LogType.ENABLED)){
             logger.log(3, "[-----------------------------------------]");
             logger.log(3, "      Your license has been verified!");
