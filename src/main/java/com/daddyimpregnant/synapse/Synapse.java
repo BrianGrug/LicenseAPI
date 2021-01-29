@@ -6,12 +6,15 @@ import com.daddyimpregnant.synapse.utils.Actions;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class Synapse {
 
-    @Setter @Getter private LicenseResults licenseResults;
-    @Setter @Getter private LogType logType;
-    @Getter boolean plugin;
     @Getter private static Synapse instance;
+
+    private LicenseResults licenseResults;
+    private LogType logType;
+    boolean plugin;
 
     public Synapse() {
         instance = this;
@@ -26,8 +29,7 @@ public class Synapse {
      * @return True / false depending on the params
      */
     public LicenseResults checkLicense(String type, String license, String securityToken, LogType logType, boolean plugin) {
-        Actions actions = new Actions();
-        return actions.checkLicense(type, license, securityToken, logType, plugin);
+        return new Actions().checkLicense(type, license, securityToken, logType, plugin);
     }
 
     /**
@@ -37,8 +39,7 @@ public class Synapse {
      * @return A created license as a string
      */
     public String createLicense(String discord, String plugin, String securityToken) {
-        Actions actions = new Actions();
-        return actions.createLicense(discord, plugin, securityToken);
+        return new Actions().createLicense(discord, plugin, securityToken);
     }
 
     /**
@@ -48,7 +49,6 @@ public class Synapse {
      * @return The license as a string if it's not null
      */
     public String getLicenseFromDiscord(String discord, String type, String securityToken) {
-        Actions actions = new Actions();
-        return actions.getLicenseFromDiscord(discord, type, securityToken);
+        return new Actions().getLicenseFromDiscord(discord, type, securityToken);
     }
 }

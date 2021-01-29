@@ -4,30 +4,27 @@ import com.daddyimpregnant.synapse.Synapse;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
 
+import java.util.logging.Level;
+
 public class Logger {
 
+    /**
+     * Method for logging a message to the terminal
+     *
+     * @param type    the urgency of the message
+     * @param message the message
+     */
     public void log(int type, String message) {
-        if (Synapse.getInstance().isPlugin()) {
-            if (type == 1) {
-                Bukkit.getLogger().warning(Ansi.ansi().fg(Ansi.Color.YELLOW).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-            if (type == 2) {
-                Bukkit.getLogger().severe(Ansi.ansi().fg(Ansi.Color.RED).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-            if (type == 3) {
-                Bukkit.getLogger().info(Ansi.ansi().fg(Ansi.Color.GREEN).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-        } else {
-            java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Logger.class.getName());
-            if (type == 1) {
-                logger.warning(Ansi.ansi().fg(Ansi.Color.YELLOW).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-            if (type == 2) {
-                logger.severe(Ansi.ansi().fg(Ansi.Color.RED).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-            if (type == 3) {
-                logger.info(Ansi.ansi().fg(Ansi.Color.GREEN).boldOff().toString() + message + Ansi.ansi().reset());
-            }
-        }
+        final java.util.logging.Logger logger = Synapse.getInstance().isPlugin()
+                ? Bukkit.getLogger()
+                : java.util.logging.Logger.getLogger(Logger.class.getName());
+
+        final Ansi ansi = type == 1
+                ? Ansi.ansi().fg(Ansi.Color.YELLOW).boldOff()
+                : type == 2
+                ? Ansi.ansi().fg(Ansi.Color.RED).boldOff()
+                : Ansi.ansi().fg(Ansi.Color.GREEN).boldOff();
+
+        logger.log(type == 1 ? Level.INFO : type == 2 ? Level.SEVERE : Level.INFO, ansi.toString() + message + Ansi.ansi().reset());
     }
 }
