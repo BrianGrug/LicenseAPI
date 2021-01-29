@@ -16,7 +16,7 @@ public class Actions {
         Logger logger = new Logger();
 
         if(securityToken == null){
-            securityToken = "17011525";
+            securityToken = "5s7roiiky";
         }
 
         Gson gson = new Gson();
