@@ -12,11 +12,14 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 
 public class Actions {
+
+    String url = "http://daddyimpregnant.com:8000/licensing/";
+
     public LicenseResults checkLicense(String type, String license, String securityToken, LogType logType, boolean plugin) {
         Logger logger = new Logger();
 
         if(securityToken == null){
-            securityToken = "5s7roiiky";
+            securityToken = "";
         }
 
         Gson gson = new Gson();
@@ -95,10 +98,9 @@ public class Actions {
     public String createLicense(String discord, String plugin, String securityToken) {
 
         String token;
-        String url = "http://daddyimpregnant.com:8000/licensing/add/";
 
         try {
-            Connection.Response res1 = Jsoup.connect(url)
+            Connection.Response res1 = Jsoup.connect(url + "validate")
                     .method(Connection.Method.GET)
                     .userAgent("Mozilla")
                     .header("X-CSRFToken", "")
@@ -126,10 +128,9 @@ public class Actions {
     private String getDiscordFromLicense(String license, String type, String securityToken) {
 
         String token;
-        String url = "http://daddyimpregnant.com:8000/licensing/discord/";
 
         try {
-            Connection.Response res1 = Jsoup.connect(url)
+            Connection.Response res1 = Jsoup.connect(url + "discord")
                     .method(Connection.Method.GET)
                     .userAgent("Mozilla")
                     .header("X-CSRFToken", "")
@@ -157,10 +158,9 @@ public class Actions {
     public String getLicenseFromDiscord(String discord, String type, String securityToken) {
 
         String token;
-        String url = "http://192.168.1.13:8000/licensing/discord/";
 
         try {
-            Connection.Response res1 = Jsoup.connect(url)
+            Connection.Response res1 = Jsoup.connect(url + "discord")
                     .method(Connection.Method.GET)
                     .userAgent("Mozilla")
                     .header("X-CSRFToken", "")
